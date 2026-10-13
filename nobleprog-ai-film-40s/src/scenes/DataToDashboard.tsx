@@ -339,7 +339,7 @@ export const DataToDashboard: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
             <line x1={lx0} y1={lineY} x2={lx1} y2={lineY} stroke={C.light} strokeWidth={14} strokeOpacity={0.14 * fade} strokeLinecap="round" />
             <line x1={lx0} y1={lineY} x2={lx1} y2={lineY} stroke={C.light} strokeWidth={3} strokeLinecap="round" opacity={fade} />
             <path d={areaPath} fill="url(#area)" opacity={lineDraw * fade} style={{ clipPath: `inset(0 ${100 - lineDraw * 100}% 0 0)` }} />
-            <path d={linePath} fill="none" stroke={C.light} strokeWidth={3.5} strokeLinejoin="round" strokeLinecap="round" pathLength={1} strokeDasharray={`${lineDraw} 1`} opacity={fade} />
+            {lineDraw > 0.002 && <path d={linePath} fill="none" stroke={C.light} strokeWidth={3.5} strokeLinejoin="round" strokeLinecap="round" pathLength={1} strokeDasharray={`${lineDraw} 1`} opacity={fade} />}
             {linePts.map((p, j) => (
               <circle key={j} cx={p[0]} cy={p[1]} r={5} fill={C.white} opacity={clamp(lineDraw * 10 - j) * fade * 0.9} />
             ))}

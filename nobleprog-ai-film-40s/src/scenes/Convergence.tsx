@@ -1,7 +1,7 @@
 import React from 'react';
 import { C, CX, FONT } from '../theme';
 import { E, clamp, deg, lerp, prog } from '../lib/anim';
-import { circlePts, lerpPts, project, ptsToPath, rotX, rotY, roundRectPts, squarePts, trianglePts } from '../lib/proj';
+import { circlePts, depthRuns, lerpPts, project, ptsToPath, rotX, rotY, roundRectPts, squarePts, trianglePts } from '../lib/proj';
 import type { TL } from '../timeline';
 
 /**
@@ -114,25 +114,24 @@ export const Convergence: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
         v = rotY(v, spin);
         return v;
       });
-      for (let i = 0; i < N; i++) {
-        const p0 = P[i];
-        const p1 = P[(i + 1) % N];
-        const q0 = project([p0[0] * gScale, p0[1] * gScale, p0[2] * gScale], gx, gy + (cy - GY), 1500);
-        const q1 = project([p1[0] * gScale, p1[1] * gScale, p1[2] * gScale], gx, gy + (cy - GY), 1500);
-        const front = clamp(0.5 - (p0[2] + p1[2]) / 2 / (2 * RING_R));
+      const Q = P.map((p) => {
+        const q = project([p[0] * gScale, p[1] * gScale, p[2] * gScale], gx, gy + (cy - GY), 1500);
+        return { x: q.x + (cx - CX), y: q.y };
+      });
+      const frontAt = (i: number) => clamp(0.5 - (P[i][2] + P[(i + 1) % N][2]) / 2 / (2 * RING_R));
+      depthRuns(Q, frontAt, true, 12).forEach((run, j) => {
         els.push(
-          <line
-            key={`r${k}_${i}`}
-            x1={q0.x + (cx - CX)}
-            y1={q0.y}
-            x2={q1.x + (cx - CX)}
-            y2={q1.y}
-            stroke={`rgba(${r},${g},${b},${lerp(1, lerp(0.22, 1, front), u3d) * gAlpha})`}
-            strokeWidth={lerp(3, lerp(2, 3.6, front), u3d) * lerp(1, 0.8, up)}
-            strokeLinecap="round"
+          <path
+            key={`r${k}_${j}`}
+            d={run.d}
+            fill="none"
+            stroke={`rgba(${r},${g},${b},${lerp(1, lerp(0.22, 1, run.a), u3d) * gAlpha})`}
+            strokeWidth={lerp(3, lerp(2, 3.6, run.a), u3d) * lerp(1, 0.8, up)}
+            strokeLinecap="butt"
+            strokeLinejoin="round"
           />,
         );
-      }
+      });
     }
   });
 

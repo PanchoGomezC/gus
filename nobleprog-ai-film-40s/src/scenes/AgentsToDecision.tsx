@@ -1,7 +1,7 @@
 import React from 'react';
 import { C, CX, CY, FONT } from '../theme';
 import { E, clamp, deg, lerp, prog, spring } from '../lib/anim';
-import { project, rotX, rotY } from '../lib/proj';
+import { depthRuns, project, rotX, rotY } from '../lib/proj';
 import type { V3 } from '../lib/proj';
 import type { TL } from '../timeline';
 
@@ -134,16 +134,17 @@ export const AgentsToDecision: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
     const ringRho = prog(t, c.deploy[0], c.deploy[1], E.out);
     const N = 120;
     const n = Math.floor(N * draw);
-    for (let k = 0; k < n; k++) {
-      const a0 = (k / N) * Math.PI * 2;
-      const a1 = ((k + 1) / N) * Math.PI * 2;
-      const p0 = place([ringRho * R * Math.sin(a0), -ringRho * R * Math.cos(a0), 0], frozen);
-      const p1 = place([ringRho * R * Math.sin(a1), -ringRho * R * Math.cos(a1), 0], frozen);
-      const front = clamp(0.5 - (p0.z + p1.z) / 2 / (2 * R));
-      svgEls.push(
-        <line key={`r${k}`} x1={p0.x} y1={p0.y} x2={p1.x} y2={p1.y} stroke={C.white} strokeOpacity={lerp(0.12, 0.42, front) * ringFade} strokeWidth={2} strokeLinecap="round" />,
-      );
-    }
+    const ringPts = Array.from({ length: N + 1 }, (_, k) => {
+      const a = (k / N) * Math.PI * 2;
+      return place([ringRho * R * Math.sin(a), -ringRho * R * Math.cos(a), 0], frozen);
+    });
+    const frontAt = (k: number) => clamp(0.5 - (ringPts[k].z + ringPts[k + 1].z) / 2 / (2 * R));
+    if (n > 0)
+      depthRuns(ringPts, frontAt, false, 10, n + 1).forEach((run, j) => {
+        svgEls.push(
+          <path key={`r${j}`} d={run.d} fill="none" stroke={C.white} strokeOpacity={lerp(0.12, 0.42, run.a) * ringFade} strokeWidth={2} strokeLinecap="butt" strokeLinejoin="round" />,
+        );
+      });
     // radio hacia el objetivo
     const n0 = nodeAt(0, frozen);
     svgEls.push(
@@ -212,6 +213,7 @@ export const AgentsToDecision: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
             fontSize: fs,
             letterSpacing: '0.14em',
             color: act > 0.5 ? C.white : 'rgba(245,247,250,0.8)',
+            textShadow: '0 0 10px #0A0D14, 0 0 4px #0A0D14, 0 0 2px #0A0D14',
             opacity: d * (0.55 + 0.45 * front) * labelFade * (0.75 + 0.25 * act),
             transform: `translateY(${lerp(above ? 8 : -8, 0, d)}px) translateX(${fs * 0.07}px)`,
           }}
@@ -229,7 +231,7 @@ export const AgentsToDecision: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
       {t < c.check + 0.8 && <circle cx={CX} cy={CY} r={66 * lerp(1, 2.2, prog(t, c.check, c.check + 0.8, E.out))} fill="none" stroke={C.light} strokeWidth={2} opacity={1 - prog(t, c.check, c.check + 0.8)} />}
       {t > C1 && t < C1 + 0.9 && <circle cx={CX} cy={CY} r={44 * lerp(1, 3, prog(t, C1, C1 + 0.9, E.out))} fill="none" stroke={C.white} strokeWidth={2} opacity={1 - prog(t, C1, C1 + 0.9)} />}
       <circle cx={CX} cy={CY} r={centerR} fill={C.blue} stroke={C.light} strokeWidth={3} />
-      <path
+      {checkDraw > 0.002 && <path
         d={`M${CX - 26} ${CY + 2} L${CX - 8} ${CY + 20} L${CX + 28} ${CY - 18}`}
         fill="none"
         stroke={C.white}
@@ -239,9 +241,9 @@ export const AgentsToDecision: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
         pathLength={checkLen}
         strokeDasharray={`${checkDraw} 2`}
         transform={`translate(${CX} ${CY}) scale(${centerR / 66}) translate(${-CX} ${-CY})`}
-      />
+      />}
       <circle cx={CX} cy={CY} r={9 * toNode * (1 - done)} fill={C.white} />
-      <path
+      {done > 0.002 && <path
         d={`M${CX - 15} ${CY + 1} L${CX - 4} ${CY + 12} L${CX + 17} ${CY - 11}`}
         fill="none"
         stroke={C.white}
@@ -250,7 +252,7 @@ export const AgentsToDecision: React.FC<{ t: number; T: TL }> = ({ t, T }) => {
         strokeLinejoin="round"
         pathLength={1}
         strokeDasharray={`${done} 2`}
-      />
+      />}
     </g>
   );
 

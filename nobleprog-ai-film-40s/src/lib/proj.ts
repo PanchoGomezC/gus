@@ -112,3 +112,32 @@ export const ptsToPath = (pts: [number, number][], cx = 0, cy = 0) =>
 
 export const lerpPts = (a: [number, number][], b: [number, number][], t: number): [number, number][] =>
   a.map((p, i) => [p[0] + (b[i][0] - p[0]) * t, p[1] + (b[i][1] - p[1]) * t]);
+
+/**
+ * Agrupa un contorno proyectado en tramos continuos de opacidad similar.
+ * Evita el efecto «cuentas» de dibujar segmentos sueltos con extremos redondeados
+ * cuando la opacidad es parcial. Devuelve un path por tramo.
+ */
+export const depthRuns = (
+  pts: { x: number; y: number }[],
+  alpha: (i: number) => number,
+  closed = true,
+  levels = 14,
+  count = pts.length,
+): { d: string; a: number }[] => {
+  const runs: { d: string; a: number }[] = [];
+  const segs = closed ? count : count - 1;
+  let cur: { pts: string[]; q: number } | null = null;
+  for (let i = 0; i < segs; i++) {
+    const q = Math.round(Math.max(0, Math.min(1, alpha(i))) * levels);
+    const p0 = pts[i];
+    const p1 = pts[(i + 1) % pts.length];
+    if (!cur || cur.q !== q) {
+      if (cur) runs.push({ d: cur.pts.join(' '), a: cur.q / levels });
+      cur = { pts: [`M${p0.x.toFixed(2)} ${p0.y.toFixed(2)}`], q };
+    }
+    cur.pts.push(`L${p1.x.toFixed(2)} ${p1.y.toFixed(2)}`);
+  }
+  if (cur) runs.push({ d: cur.pts.join(' '), a: cur.q / levels });
+  return runs;
+};

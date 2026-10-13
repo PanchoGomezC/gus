@@ -17,7 +17,7 @@ echo "== fotogramas congelados (≥1,0 s) =="
 ffmpeg -nostats -i "$F" -vf "freezedetect=n=0.0008:d=1.0" -an -f null - 2>&1 | grep -E "freeze_(start|duration|end)" || echo "ninguno"
 
 echo "== loudness (EBU R128) =="
-ffmpeg -nostats -i "$F" -vn -af ebur128=peak=true -f null - 2>&1 | grep -A12 "Summary" | grep -E "I:|LRA:|Peak:"
+ffmpeg -nostats -i "$F" -vn -af ebur128=peak=true -f null - 2>&1 | grep -A30 "Summary" | grep -E "I:|LRA:|Peak:"
 
 echo "== silencios de audio ≥ 0,8 s (-55 dB) =="
 ffmpeg -nostats -i "$F" -vn -af silencedetect=n=-55dB:d=0.8 -f null - 2>&1 | grep -E "silence_(start|end)" || echo "ninguno"
