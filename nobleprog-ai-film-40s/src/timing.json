@@ -1,0 +1,61 @@
+{
+  "source": "GUIDE (Kokoro TTS, voice em_alex) — reemplazar por ElevenLabs",
+  "file": "assets/audio/vo_guide.wav",
+  "duration": 37.245,
+  "phrases": [
+    {
+      "id": 1,
+      "text": "La inteligencia artificial ya no se trata solo de obtener respuestas.",
+      "start": 0.55,
+      "end": 4.509
+    },
+    {
+      "id": 2,
+      "text": "Se trata de diseñar cómo trabaja.",
+      "start": 5.059,
+      "end": 7.148
+    },
+    {
+      "id": 3,
+      "text": "Con Claude, transformamos datos en análisis, dashboards y procesos conectados.",
+      "start": 7.698,
+      "end": 12.205
+    },
+    {
+      "id": 4,
+      "text": "Con prompts, contexto y verificación, construimos resultados confiables.",
+      "start": 12.705,
+      "end": 16.99
+    },
+    {
+      "id": 5,
+      "text": "Con los agentes, pasamos de tareas aisladas a sistemas que planifican y ejecutan.",
+      "start": 17.49,
+      "end": 22.298
+    },
+    {
+      "id": 6,
+      "text": "Y con ChatGPT, llevamos todo eso al liderazgo: priorizar, entender riesgos y tomar mejores decisiones.",
+      "start": 22.798,
+      "end": 29.233
+    },
+    {
+      "id": 7,
+      "text": "Tres experiencias. Una evolución.",
+      "start": 29.833,
+      "end": 31.878
+    },
+    {
+      "id": 8,
+      "text": "La IA puede hacer más.",
+      "start": 32.328,
+      "end": 33.799
+    },
+    {
+      "id": 9,
+      "text": "El criterio sobre qué hacer… sigue siendo nuestro.",
+      "start": 34.499,
+      "end": 37.245
+    }
+  ]
+}

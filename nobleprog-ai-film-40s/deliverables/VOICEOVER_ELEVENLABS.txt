@@ -1,0 +1,80 @@
+LOCUCIÓN — «DE RESPONDER A ACTUAR» · NobleProg · Francisco Gómez
+=====================================================================
+
+TEXTO EXACTO (sin modificaciones respecto al guion aprobado)
+---------------------------------------------------------------------
+La inteligencia artificial ya no se trata solo de obtener respuestas.
+
+Se trata de diseñar cómo trabaja.
+
+Con Claude, transformamos datos en análisis, dashboards y procesos conectados.
+
+Con prompts, contexto y verificación, construimos resultados confiables.
+
+Con los agentes, pasamos de tareas aisladas a sistemas que planifican y ejecutan.
+
+Y con ChatGPT, llevamos todo eso al liderazgo: priorizar, entender riesgos y tomar mejores decisiones.
+
+Tres experiencias. Una evolución.
+
+La IA puede hacer más.
+
+El criterio sobre qué hacer… sigue siendo nuestro.
+
+(80 palabras · no fue necesario editar el texto para cumplir los 40 s)
+
+
+ESTADO REAL DE LA VOZ EN ESTA ENTREGA
+---------------------------------------------------------------------
+• ElevenLabs: la conexión MCP autorizada SÍ generó 4 tomas con el texto exacto
+  (2 voces × 2 interpretaciones, modelo eleven_v4, 556 créditos por toma,
+  ≈ 2.224 créditos en total). Están en el flow de tu cuenta:
+      https://elevenlabs.io/app/flows/pUnhGJwdeoLV4uhUelsU
+  - Toma A (nodo 7jiJpuVhkIbv9gTV6Bwo): «Zenas Aquila – Calm, Documentary Narrator»
+    voice_id 0fizugdarib8ZOtvybTk · barítono, español latinoamericano neutro.
+  - Toma B (nodo OYlmtkU97gVtYINyrpis): «Carlos – Premium Latin American Spanish
+    Narrator (Español Neutro)» voice_id Y4HwpMNrBWN5dFKi5Lw8.
+• No fue posible DESCARGARLAS a este entorno: las herramientas de lectura del
+  conector (get_flow_run_status, get_flow, get_flow_node, show_flow_results)
+  devolvieron 403 Forbidden, y la red del entorno bloquea api.elevenlabs.io.
+  Por eso no pude escucharlas, compararlas ni elegir la mejor.
+• El vídeo entregado usa una VOZ GUÍA TEMPORAL (Kokoro TTS, modelo abierto
+  Apache-2.0, voz em_alex) generada localmente. NO es la voz final de ElevenLabs.
+  El archivo se llama VIDEO_9x16_40s_VOZ_GUIA.mp4 por ese motivo.
+
+
+CÓMO INCORPORAR LA VOZ FINAL (≈ 8 minutos de máquina)
+---------------------------------------------------------------------
+1. En el flow de ElevenLabs, escucha las 4 tomas y descarga la mejor (MP3/WAV).
+   Criterios sugeridos: claridad en «dashboards», «prompts», «ChatGPT»; pausas
+   naturales; que la última frase termine antes de 37,6 s.
+2. Copia el archivo al proyecto y ejecuta:
+      python scripts/align_vo.py ruta/a/toma.mp3
+   (detecta las 9 frases por silencios, coloca la primera en 0,55 s y reescribe
+   src/timing.json; toda la animación y los efectos se re-sincronizan solos).
+3. Renderiza:
+      VO=public/assets/audio/vo_final.wav bash scripts/render.sh
+   → deliverables/VIDEO_FINAL_9x16_40s.mp4
+
+
+CONFIGURACIÓN RECOMENDADA EN ELEVENLABS (si se genera de nuevo)
+---------------------------------------------------------------------
+Modelo: eleven_v4 (o eleven_multilingual_v2)
+Voz: Zenas Aquila (0fizugdarib8ZOtvybTk) — alternativa Carlos (Y4HwpMNrBWN5dFKi5Lw8)
+Estabilidad ≈ 0,5 · Similitud ≈ 0,8 · Estilo ≈ 0,15 · Speaker boost: sí
+Velocidad: 1,0 (objetivo 140–155 ppm; duración hablada ≈ 33–36 s)
+Separar cada frase con un salto de línea en blanco (genera pausas naturales).
+
+
+MAPA DE TIEMPOS ACTUAL (voz guía; se regenera con align_vo.py)
+---------------------------------------------------------------------
+01  00.55 → 04.51  La inteligencia artificial ya no se trata solo de obtener respuestas.
+02  05.06 → 07.15  Se trata de diseñar cómo trabaja.
+03  07.70 → 12.21  Con Claude, transformamos datos en análisis, dashboards y procesos conectados.
+04  12.71 → 16.99  Con prompts, contexto y verificación, construimos resultados confiables.
+05  17.49 → 22.30  Con los agentes, pasamos de tareas aisladas a sistemas que planifican y ejecutan.
+06  22.80 → 29.23  Y con ChatGPT, llevamos todo eso al liderazgo: priorizar, entender riesgos y tomar mejores decisiones.
+07  29.83 → 31.88  Tres experiencias. Una evolución.
+08  32.33 → 33.80  La IA puede hacer más.
+09  34.50 → 37.25  El criterio sobre qué hacer… sigue siendo nuestro.
+Ritmo medido de la guía: 80 palabras / 32,3 s hablados ≈ 148 ppm (≈ 131 ppm contando pausas; fin de voz en 37,25 s).

@@ -1,0 +1,54 @@
+1
+00:00:00,550 --> 00:00:04,859
+La inteligencia artificial ya no se
+trata solo de obtener respuestas.
+
+2
+00:00:05,059 --> 00:00:07,498
+Se trata de diseñar cómo trabaja.
+
+3
+00:00:07,698 --> 00:00:10,223
+Con Claude, transformamos
+datos en análisis,
+
+4
+00:00:10,273 --> 00:00:12,555
+dashboards y procesos conectados.
+
+5
+00:00:12,705 --> 00:00:17,340
+Con prompts, contexto y verificación,
+construimos resultados confiables.
+
+6
+00:00:17,490 --> 00:00:20,024
+Con los agentes, pasamos
+de tareas aisladas
+
+7
+00:00:20,074 --> 00:00:22,648
+a sistemas que planifican y ejecutan.
+
+8
+00:00:22,798 --> 00:00:25,679
+Y con ChatGPT, llevamos
+todo eso al liderazgo:
+
+9
+00:00:25,729 --> 00:00:29,583
+priorizar, entender riesgos
+y tomar mejores decisiones.
+
+10
+00:00:29,833 --> 00:00:32,228
+Tres experiencias. Una evolución.
+
+11
+00:00:32,328 --> 00:00:34,149
+La IA puede hacer más.
+
+12
+00:00:34,499 --> 00:00:37,595
+El criterio sobre qué
+hacer… sigue siendo nuestro.

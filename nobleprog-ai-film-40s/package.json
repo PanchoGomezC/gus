@@ -1,0 +1,28 @@
+{
+  "name": "nobleprog-ai-film-40s",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DE RESPONDER A ACTUAR — 40s vertical motion film (Remotion)",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "bash scripts/render.sh",
+    "still": "remotion still src/index.ts Film"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "5.1.0",
+    "@remotion/cli": "4.0.535",
+    "@remotion/fonts": "4.0.535",
+    "@remotion/media": "4.0.535",
+    "@remotion/three": "4.0.535",
+    "@react-three/fiber": "8.17.10",
+    "three": "0.169.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.535"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/three": "0.169.0",
+    "typescript": "5.6.3"
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/
+build/
+# intermedios regenerables por scripts/audio_design.py (las pistas finales están en deliverables/stems)
+public/assets/audio/music.wav
+public/assets/audio/sfx.wav
+public/assets/audio/vo.wav
+public/assets/audio/mix_premaster.wav
+public/assets/audio/vo_final.wav
+__pycache__/
